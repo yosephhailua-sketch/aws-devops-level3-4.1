@@ -1,0 +1,7 @@
+main script bash -n exit code: 0
+ec2_public_dns_name output blocks: 1
+instance public DNS references: 1
+raw Terraform output reads: 1
+legacy JSON output reads: 0
+empty DNS guards: 1
+DNS guard before first SSH: 1

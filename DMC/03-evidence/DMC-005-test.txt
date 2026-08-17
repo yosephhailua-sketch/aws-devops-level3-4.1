@@ -1,0 +1,2 @@
+main script bash -n exit code: 0
+user-data bash -n exit code: 0

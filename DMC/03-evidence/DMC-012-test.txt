@@ -1,0 +1,5 @@
+main script bash -n exit code: 0
+terraform init commands: 1
+terraform fmt checks: 1
+terraform validate commands: 1
+correct Terraform command order: 1

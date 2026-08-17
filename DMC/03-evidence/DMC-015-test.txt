@@ -1,0 +1,28 @@
+DMC-015 STATISKT DOKUMENTATIONSTEST
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: c1a6f5732ecb6263e03e8c91df5d7247f5abb3e7a149d82404c3095a78127cb5
+Riktiga AWS- och Terraform-kommandon körda: nej
+
+GODKÄND: Bash-syntaxen är giltig
+GODKÄND: Den felaktiga formuleringen "iterration" är borttagen
+GODKÄND: Den felaktiga formuleringen "wait four" är borttagen
+GODKÄND: Den felaktiga formuleringen "preperation" är borttagen
+GODKÄND: Den felaktiga formuleringen "applicaton" är borttagen
+GODKÄND: Den felaktiga formuleringen "ouput" är borttagen
+GODKÄND: Den korrigerade formuleringen "iteration" finns
+GODKÄND: Den korrigerade formuleringen "wait for" finns
+GODKÄND: Den korrigerade formuleringen "preparation" finns
+GODKÄND: Den korrigerade formuleringen "application" finns
+GODKÄND: Den korrigerade formuleringen "output" finns
+GODKÄND: DNS-exemplet saknar extra eller obalanserade citationstecken
+GODKÄND: Bokstaven O används inte som exitkod
+GODKÄND: Exitkod 0 beskrivs som ett lyckat resultat
+GODKÄND: Exitkod 1 beskrivs som ett misslyckat resultat
+
+GRANSKADE KOMMENTARER
+  Rad 271: # ec2_public_dns_name = "ec2-13-48-135-138.eu-north-1.compute.amazonaws.com"
+  Rad 319: # output of echo $? means:
+  Rad 320: #  0 = success
+  Rad 321: #  1 = failure
+
+SLUTRESULTAT: GODKÄND

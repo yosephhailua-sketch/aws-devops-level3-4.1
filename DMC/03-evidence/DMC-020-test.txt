@@ -1,0 +1,69 @@
+DMC-020 – TEST AV SSH-VÄNTELOGIK
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: 8b6d36f15ed5837bce3b4f1aa5819c9e7dbe00fad5c083d82022c261645742a5
+Riktiga SSH-, AWS-, Terraform- och curl-kommandon körda: nej
+
+GODKÄND: Bash-syntaxen är giltig
+GODKÄND: SSH_OPTIONS definieras exakt en gång
+GODKÄND: Exakt två ordinarie SSH-kommandon finns
+GODKÄND: SSH-väntelogiken finns före de ordinarie SSH-kommandona
+GODKÄND: SSH_WAIT_OPTIONS innehåller exakt de förväntade alternativen
+GODKÄND: BatchMode är aktiverat
+GODKÄND: Anslutningstimeout är fem sekunder
+GODKÄND: Varje SSH-kontroll gör ett anslutningsförsök
+GODKÄND: Nya värdnycklar accepteras utan att kontrollen stängs av
+GODKÄND: Maximalt antal försök är 24
+GODKÄND: Fördröjningen mellan försöken är fem sekunder
+GODKÄND: SSH-status initieras som false
+GODKÄND: Försöksloopen använder SSH_MAX_ATTEMPTS
+GODKÄND: SSH-kontrollen använder båda options-arrayerna
+GODKÄND: SSH-status sätts till true efter lyckad anslutning
+GODKÄND: Loopen avbryts efter lyckad anslutning
+GODKÄND: Sleep körs endast när fler försök återstår
+GODKÄND: Misslyckad väntan ger ett tydligt felmeddelande
+GODKÄND: Skriptet avslutas med exitkod 1 om SSH inte blir tillgängligt
+GODKÄND: Väntelogiken ligger före båda ordinarie SSH-kommandona
+GODKÄND: SSH som blir tillgängligt på tredje försöket godkänns
+GODKÄND: Tre SSH-kontroller och två väntningar genomförs
+GODKÄND: SSH-alternativen skickas som separata korrekta argument
+GODKÄND: Nyckelsökväg med mellanslag bevaras som ett argument
+GODKÄND: Bekräftelse visas när SSH blir tillgängligt
+GODKÄND: Permanent SSH-fel stoppar skriptet med exitkod 1
+GODKÄND: Exakt 24 SSH-kontroller genomförs vid permanent fel
+GODKÄND: Ingen onödig väntan sker efter sista försöket
+GODKÄND: Alla simulerade sleep-anrop använder rätt fördröjning
+GODKÄND: Felmeddelandet anger att 24 försök misslyckades
+
+GRANSKADE KODRADER
+  Rad 294: SSH_OPTIONS=(-i "$MY_SSH")
+  Rad 296: SSH_WAIT_OPTIONS=(
+  Rad 297:   -o BatchMode=yes
+  Rad 298:   -o ConnectTimeout=5
+  Rad 299:   -o ConnectionAttempts=1
+  Rad 300:   -o StrictHostKeyChecking=accept-new
+  Rad 301: )
+  Rad 303: SSH_MAX_ATTEMPTS=24
+  Rad 304: SSH_RETRY_DELAY=5
+  Rad 305: ssh_ready=false
+  Rad 307: for ((ssh_attempt = 1; ssh_attempt <= SSH_MAX_ATTEMPTS; ssh_attempt++)); do
+  Rad 308:   if ssh "${SSH_OPTIONS[@]}" "${SSH_WAIT_OPTIONS[@]}" \
+  Rad 309:     "ec2-user@$MY_EC2" true >/dev/null 2>&1; then
+  Rad 310:     ssh_ready=true
+  Rad 311:     printf 'SSH is available after attempt %d of %d.\n' \
+  Rad 312:       "$ssh_attempt" "$SSH_MAX_ATTEMPTS"
+  Rad 313:     break
+  Rad 314:   fi
+  Rad 316:   printf 'Waiting for SSH, attempt %d of %d failed.\n' \
+  Rad 317:     "$ssh_attempt" "$SSH_MAX_ATTEMPTS"
+  Rad 319:   if ((ssh_attempt < SSH_MAX_ATTEMPTS)); then
+  Rad 320:     sleep "$SSH_RETRY_DELAY"
+  Rad 321:   fi
+  Rad 322: done
+  Rad 324: if [[ "$ssh_ready" != true ]]; then
+  Rad 325:   printf 'ERROR: SSH did not become available after %d attempts.\n' \
+  Rad 326:     "$SSH_MAX_ATTEMPTS" >&2
+  Rad 327:   exit 1
+  Rad 328: fi
+  Rad 330: # - wait for cloud-init process user-data script (press Ctrl+C to abort)
+
+SLUTRESULTAT: GODKÄND

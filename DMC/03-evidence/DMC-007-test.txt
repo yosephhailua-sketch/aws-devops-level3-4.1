@@ -1,0 +1,6 @@
+main script bash -n exit code: 0
+user-data bash -n exit code: 0
+legacy service nginx start commands: 0
+systemctl enable --now nginx commands: 1
+Nginx active checks: 1
+Git version checks: 1

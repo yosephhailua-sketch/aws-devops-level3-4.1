@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DevOps Starter Pack Deluxe Edition</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      background: linear-gradient(135deg, #020617, #111827, #1e293b);
+      color: #f8fafc;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    main {
+      width: min(850px, 100%);
+      padding: 48px 28px;
+      border: 1px solid #334155;
+      border-radius: 22px;
+      background: rgba(15, 23, 42, 0.94);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+    }
+
+    h1 {
+      margin: 0;
+      color: #38bdf8;
+      font-size: clamp(3rem, 10vw, 6rem);
+    }
+
+    h2 {
+      margin: 15px 0;
+      font-size: clamp(1.5rem, 5vw, 2.8rem);
+    }
+
+    .status {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #14532d;
+      color: #bbf7d0;
+      font-weight: bold;
+    }
+
+    .meme {
+      margin: 25px auto;
+      padding: 25px;
+      max-width: 620px;
+      border-left: 5px solid #f59e0b;
+      border-radius: 12px;
+      background: #1e293b;
+      font-size: 1.2rem;
+    }
+
+    .stack {
+      color: #94a3b8;
+      line-height: 1.8;
+    }
+
+    footer {
+      margin-top: 30px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Hey Me!</h1>
+    <h2>DevOps Starter Pack Deluxe Edition</h2>
+
+    <div class="status">DEPLOYMENT SUCCESSFUL</div>
+
+    <div class="meme">
+      <strong>Developer:</strong> It worked on my machine.<br><br>
+      <strong>Terraform:</strong> Fine. I built your machine in AWS.
+    </div>
+
+    <p class="stack">
+      Terraform → AWS EC2 → Cloud-init → Git → Nginx<br>
+      Powered by automation and questionable confidence.
+    </p>
+
+    <footer>
+      Created for AWS DevOps Level 3 – Iteration 2
+    </footer>
+  </main>
+</body>
+</html>

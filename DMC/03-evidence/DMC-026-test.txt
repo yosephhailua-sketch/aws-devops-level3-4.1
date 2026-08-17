@@ -1,0 +1,11 @@
+DMC-026 – Fullständig hantering av webbroten
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: 27ccc5d80f1ffd4f125d9ddf40f39d9b606d193f31343bc347924b90c769db9c
+Verifieringstyp: statisk analys och säker lokal simulering
+Riktiga AWS-, Terraform-, SSH-, Git-, curl- och deploykommandon körda: nej
+
+GODKÄND: Bash-syntaxen är giltig
+GODKÄND: Alla poster i webbroten tas bort kontrollerat
+GODKÄND: Webbroten är låst till Nginx-katalogen
+
+SLUTRESULTAT: GODKÄND

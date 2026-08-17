@@ -1,0 +1,18 @@
+DMC-016 – TEST AV DEKLARERAT JQ-BEROENDE
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: c1a6f5732ecb6263e03e8c91df5d7247f5abb3e7a149d82404c3095a78127cb5
+Riktiga AWS- och Terraform-kommandon körda: nej
+
+GODKÄND: Bash-syntaxen är giltig
+GODKÄND: DNS hämtas exakt en gång med terraform output -raw
+GODKÄND: DNS-hämtningen saknar beroende av jq
+GODKÄND: jq kontrolleras innan det första aktiva jq-anropet
+GODKÄND: Skriptet avbryts om jq saknas
+GODKÄND: Ett tydligt felmeddelande visas om jq saknas
+
+GRANSKADE KODRADER
+  Rad 164: if ! command -v jq >/dev/null 2>&1; then
+  Rad 225:     jq -er '[
+  Rad 273: MY_EC2="$(terraform output -raw ec2_public_dns_name)"
+
+SLUTRESULTAT: GODKÄND

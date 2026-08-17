@@ -1,0 +1,44 @@
+DMC-019 – TEST AV DNS-VALIDERING
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: 941a2a00a16aed2ec6c5f4443cb5ca663d674a3f918ae08023fc62898ee5402f
+Riktiga AWS-, Terraform-, SSH- och curl-kommandon körda: nej
+
+GODKÄND: Bash-syntaxen är giltig
+GODKÄND: Terraform-outputen hämtas exakt en gång med -raw
+GODKÄND: DNS-valideringen finns före SSH-konfigurationen
+GODKÄND: Tomt DNS-värde kontrolleras
+GODKÄND: Terraform-värdet null kontrolleras
+GODKÄND: EC2_DNS_PATTERN definieras exakt en gång
+GODKÄND: DNS-punkten är korrekt escape:ad
+GODKÄND: DNS-längden begränsas till 253 tecken
+GODKÄND: DNS-värdet kontrolleras mot EC2_DNS_PATTERN
+GODKÄND: Ogiltigt DNS-värde stoppar skriptet
+GODKÄND: Tydliga felmeddelanden finns
+GODKÄND: Giltigt DNS-värde godkänns: ec2-13-48-135-138.eu-north-1.compute.amazonaws.com
+GODKÄND: Giltigt DNS-värde godkänns: a.example.com
+GODKÄND: Giltigt DNS-värde godkänns: server-01.sub-domain.example.org
+GODKÄND: Ogiltigt DNS-värde stoppas: <tomt värde>
+GODKÄND: Ogiltigt DNS-värde stoppas: null
+GODKÄND: Ogiltigt DNS-värde stoppas: example
+GODKÄND: Ogiltigt DNS-värde stoppas: exampleXcom
+GODKÄND: Ogiltigt DNS-värde stoppas: bad_name.example.com
+GODKÄND: Ogiltigt DNS-värde stoppas: -bad.example.com
+GODKÄND: Ogiltigt DNS-värde stoppas: bad-.example.com
+GODKÄND: Ogiltigt DNS-värde stoppas: bad..example.com
+GODKÄND: Ogiltigt DNS-värde stoppas: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.example.com
+GODKÄND: Ogiltigt DNS-värde stoppas: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com
+GODKÄND: DNS-valideringen sker före SSH- och curl-anrop
+
+GRANSKADE KODRADER
+  Rad 273: MY_EC2="$(terraform output -raw ec2_public_dns_name)"
+  Rad 275: if [[ -z "$MY_EC2" || "$MY_EC2" == "null" ]]; then
+  Rad 276:   printf 'ERROR: Terraform returned an empty or null ec2_public_dns_name output.\n' >&2
+  Rad 277:   exit 1
+  Rad 278: fi
+  Rad 280: EC2_DNS_PATTERN='^([A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?$'
+  Rad 282: if (( ${#MY_EC2} > 253 )) || [[ ! "$MY_EC2" =~ $EC2_DNS_PATTERN ]]; then
+  Rad 283:   printf 'ERROR: Terraform returned an invalid ec2_public_dns_name: %s\n' "$MY_EC2" >&2
+  Rad 284:   exit 1
+  Rad 285: fi
+
+SLUTRESULTAT: GODKÄND

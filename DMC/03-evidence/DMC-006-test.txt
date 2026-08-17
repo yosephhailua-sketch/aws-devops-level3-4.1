@@ -1,0 +1,3 @@
+main script bash -n exit code: 0
+user-data bash -n exit code: 0
+active full system update/upgrade commands: 0

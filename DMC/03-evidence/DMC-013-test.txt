@@ -1,0 +1,108 @@
+DMC-013 STATISKT TEST
+Tid UTC: 2026-08-11T08:23:38.259231+00:00
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: af6d599ab51c817fe787623b095cecfba00e97f24a47335812234553885b8fc7
+Externa AWS- och Terraform-kommandon körda: nej
+
+GODKÄND: Bash-syntax
+GODKÄND: Förväntat AWS-konto
+  träffar=1, rader=[155]
+GODKÄND: Förväntad AWS-region
+  träffar=1, rader=[156]
+GODKÄND: Förväntat Terraform-workspace
+  träffar=1, rader=[157]
+GODKÄND: AWS-identiteten hämtas
+  träffar=1, rader=[171]
+GODKÄND: Fel AWS-konto stoppas
+  träffar=1, rader=[177]
+GODKÄND: Fel AWS-region stoppas
+  träffar=1, rader=[190]
+GODKÄND: Terraform-workspace hämtas
+  träffar=1, rader=[203]
+GODKÄND: Fel Terraform-workspace stoppas
+  träffar=1, rader=[205]
+GODKÄND: Terraform init före plan
+  träffar=1, rader=[200]
+GODKÄND: Terraform-formattering kontrolleras
+  träffar=1, rader=[214]
+GODKÄND: Terraform-konfiguration valideras
+  träffar=1, rader=[217]
+GODKÄND: Sparad Terraform-plan skapas
+  träffar=1, rader=[220]
+GODKÄND: Sparad plan analyseras som JSON
+  träffar=1, rader=[224]
+GODKÄND: Planens Add-resurser räknas
+  träffar=1, rader=[227]
+GODKÄND: Planens Change-resurser räknas
+  träffar=1, rader=[229]
+GODKÄND: Planens Destroy-resurser räknas
+  träffar=1, rader=[231]
+GODKÄND: Exakt APPLY efterfrågas
+  träffar=1, rader=[259]
+GODKÄND: Felaktig bekräftelse stoppas
+  träffar=1, rader=[265]
+GODKÄND: Endast den sparade planen tillämpas
+  träffar=1, rader=[270]
+GODKÄND: Säkerhetsstegen ligger i rätt ordning
+  AWS-identitet=rad 171, kontokontroll=rad 177, regionkontroll=rad 190, Terraform init=rad 200, workspace-avläsning=rad 203, workspace-kontroll=rad 205, formatkontroll=rad 214, validering=rad 217, sparad plan=rad 220, plananalys=rad 224, APPLY-fråga=rad 259, APPLY-kontroll=rad 265, apply=rad 270
+
+SLUTRESULTAT: GODKÄND
+
+============================================================
+DMC-013 FUNKTIONSTEST – FELAKTIGT WORKSPACE
+Tid UTC: 2026-08-11T08:26:11Z
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: af6d599ab51c817fe787623b095cecfba00e97f24a47335812234553885b8fc7
+Testmiljö: isolerad tillfällig katalog
+Riktiga AWS- och Terraform-kommandon körda: nej
+Simulerat workspace: dmc-013-wrong-workspace
+Skriptets exitkod: 127
+
+GODKÄND: Skriptet stoppades med felstatus
+UNDERKÄND: Felaktigt workspace identifierades
+UNDERKÄND: AWS-kontrollen genomfördes med låtsaskommandot
+UNDERKÄND: Terraform init nåddes i testmiljön
+UNDERKÄND: Workspace-kontrollen genomfördes
+GODKÄND: Ingen åtgärd efter workspace-kontrollen kördes
+GODKÄND: Terraform apply anropades aldrig
+GODKÄND: Plananalysen nåddes aldrig
+
+Skriptutdata:
+  bash: : No such file or directory
+
+Simulerade Terraform-anrop:
+
+SLUTRESULTAT FUNKTIONSTEST: UNDERKÄND
+
+DMC-013 KORRIGERAT FUNKTIONSTEST – FELAKTIGT WORKSPACE
+Tid UTC: 2026-08-11T08:30:24Z
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: af6d599ab51c817fe787623b095cecfba00e97f24a47335812234553885b8fc7
+Testomfång: endast det isolerade DMC-013-blocket
+Riktiga AWS- och Terraform-kommandon körda: nej
+Simulerat workspace: dmc-013-wrong-workspace
+Skriptets exitkod: 1
+
+Klassificering av föregående test:
+Testharnessen stoppades före DMC-013 med exitkod 127.
+Den tidigare underkända posten behålls som testhistorik.
+
+GODKÄND: Säkerhetsgrinden stoppade körningen med exitkod 1
+GODKÄND: Felaktigt workspace identifierades
+GODKÄND: AWS-kontrollen genomfördes isolerat
+GODKÄND: Terraform init nåddes i testmiljön
+GODKÄND: Workspace-kontrollen genomfördes
+GODKÄND: Inga senare Terraform-steg kördes
+GODKÄND: Terraform apply anropades aldrig
+GODKÄND: Plananalysen nåddes aldrig
+GODKÄND: Inga oväntade låtsaskommandon kördes
+
+Skriptutdata:
+  Fake Terraform initialization completed.
+  ERROR: Fel Terraform-workspace. Förväntade default men fick dmc-013-wrong-workspace.
+
+Simulerade Terraform-anrop:
+  terraform init -input=false
+  terraform workspace show
+
+SLUTRESULTAT KORRIGERAT FUNKTIONSTEST: GODKÄND

@@ -1,0 +1,30 @@
+DMC-017 – TEST AV SSH-NYCKELHANTERING
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: ab1b9f730ef39643ed9976aef83fec8b4ea52cbb3b089126be52f44c35c33800
+Riktig SSH-anslutning genomförd: nej
+
+GODKÄND: Bash-syntaxen är giltig
+GODKÄND: MY_SSH definieras exakt en gång
+GODKÄND: Exakt två aktiva SSH-kommandon finns
+GODKÄND: Båda SSH-kommandona använder citerade variabler
+GODKÄND: SSH-nyckeln kontrolleras som befintlig och läsbar
+GODKÄND: Skriptet avbryts med felkod om nyckeln saknas
+GODKÄND: Ett tydligt felmeddelande visas
+GODKÄND: Definition och validering sker före SSH-anropen
+GODKÄND: Den konfigurerade SSH-nyckeln finns
+GODKÄND: Den konfigurerade SSH-nyckeln är läsbar
+GODKÄND: SSH-nyckeln saknar grupp- och övrig behörighet
+GODKÄND: Valideringen godkänner den befintliga nyckeln
+GODKÄND: Valideringen stoppar en saknad nyckel
+GODKÄND: Felmeddelandet anger den saknade nyckeln
+
+GRANSKADE KODRADER
+  Rad 281: MY_SSH="${MY_SSH:-$HOME/.ssh/petter-ec2-key.pem}"
+  Rad 283: if [[ ! -f "$MY_SSH" || ! -r "$MY_SSH" ]]; then
+  Rad 284:   printf 'ERROR: SSH-nyckeln saknas eller är inte läsbar: %s\n' "$MY_SSH" >&2
+  Rad 285:   exit 1
+  Rad 286: fi
+  Rad 289: ssh -i "$MY_SSH" "ec2-user@$MY_EC2" tail -f /var/log/cloud-init-output.log
+  Rad 295: ssh -i "$MY_SSH" "ec2-user@$MY_EC2"
+
+SLUTRESULTAT: GODKÄND

@@ -1,0 +1,6 @@
+main script bash -n exit code: 0
+main.tf backup commands: 1
+temporary main.tf creation commands: 1
+temporary main.tf write commands: 1
+atomic main.tf replacement commands: 1
+direct main.tf overwrite commands: 0

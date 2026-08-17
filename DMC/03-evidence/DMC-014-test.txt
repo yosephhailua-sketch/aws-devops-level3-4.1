@@ -1,0 +1,104 @@
+DMC-014 STATISKT TEST
+Tid UTC: 2026-08-11T08:52:19.275269+00:00
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: af6d599ab51c817fe787623b095cecfba00e97f24a47335812234553885b8fc7
+Externa AWS- och Terraform-kommandon körda: nej
+
+GODKÄND: Bash-syntax
+GODKÄND: Bekräftelsevariabeln initieras tom
+  träffar=1, rader=[256]
+GODKÄND: Användaren uppmanas att skriva exakt APPLY
+  träffar=1, rader=[259]
+GODKÄND: Bekräftelsen läses säkert med read -r
+  träffar=1, rader=[258]
+GODKÄND: Bekräftelsen jämförs exakt och skiftlägeskänsligt
+  träffar=1, rader=[265]
+GODKÄND: Felaktig bekräftelse ger ett tydligt avbrottsmeddelande
+  träffar=1, rader=[266]
+GODKÄND: Felaktig eller tom bekräftelse stoppar med exitkod 1
+GODKÄND: Misslyckad inläsning stoppar med exitkod 1
+GODKÄND: Exakt ett Terraform-apply-kommando finns
+  träffar=1, kommandon=[(270, 'terraform apply "tfplan"')]
+GODKÄND: Endast den sparade planen tfplan appliceras
+  kommandon=[(270, 'terraform apply "tfplan"')]
+GODKÄND: Automatiskt godkännande används inte
+GODKÄND: Plan, granskning, godkännande och apply ligger i rätt ordning
+  sparad plan=rad 220, plananalys=rad 224, APPLY-fråga=rad 259, APPLY-kontroll=rad 265, apply=rad 270
+
+SLUTRESULTAT: GODKÄND
+
+DMC-014 ISOLERAT FUNKTIONSTEST – AVBRUTEN APPLY
+Tid UTC: 2026-08-11T08:55:57Z
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: af6d599ab51c817fe787623b095cecfba00e97f24a47335812234553885b8fc7
+Testomfång: DMC-014:s bekräftelse- och apply-block
+Riktiga AWS- och Terraform-kommandon körda: nej
+
+Testfall: Ingen inmatning
+Skriptets exitkod: 1
+GODKÄND: Ingen inmatning stoppade körningen med exitkod 1
+GODKÄND: Ingen inmatning gav rätt avbrottsmeddelande
+GODKÄND: Ingen inmatning nådde aldrig Terraform
+GODKÄND: Ingen inmatning anropade aldrig terraform apply
+GODKÄND: Ingen inmatning körde inga oväntade Terraform-kommandon
+
+Skriptutdata:
+
+  ERROR: Bekräftelse kunde inte läsas.
+
+Simulerade Terraform-anrop:
+  Inga
+
+Testfall: Tom bekräftelse
+Skriptets exitkod: 1
+GODKÄND: Tom bekräftelse stoppade körningen med exitkod 1
+GODKÄND: Tom bekräftelse gav rätt avbrottsmeddelande
+GODKÄND: Tom bekräftelse nådde aldrig Terraform
+GODKÄND: Tom bekräftelse anropade aldrig terraform apply
+GODKÄND: Tom bekräftelse körde inga oväntade Terraform-kommandon
+
+Skriptutdata:
+  Terraform apply avbröts utan ändringar.
+
+Simulerade Terraform-anrop:
+  Inga
+
+Testfall: Felaktig bekräftelse
+Skriptets exitkod: 1
+GODKÄND: Felaktig bekräftelse stoppade körningen med exitkod 1
+GODKÄND: Felaktig bekräftelse gav rätt avbrottsmeddelande
+GODKÄND: Felaktig bekräftelse nådde aldrig Terraform
+GODKÄND: Felaktig bekräftelse anropade aldrig terraform apply
+GODKÄND: Felaktig bekräftelse körde inga oväntade Terraform-kommandon
+
+Skriptutdata:
+  Terraform apply avbröts utan ändringar.
+
+Simulerade Terraform-anrop:
+  Inga
+
+SLUTRESULTAT AVBROTTSTEST: GODKÄND
+
+DMC-014 ISOLERAT FUNKTIONSTEST – GODKÄND APPLY
+Tid UTC: 2026-08-11T08:58:16Z
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: af6d599ab51c817fe787623b095cecfba00e97f24a47335812234553885b8fc7
+Testad bekräftelse: APPLY
+Riktiga AWS- och Terraform-kommandon körda: nej
+Skriptets exitkod: 0
+
+GODKÄND: Exakt APPLY tillät körningen att slutföras
+GODKÄND: Terraform apply anropades med den sparade planen tfplan
+GODKÄND: Exakt ett Terraform-kommando anropades
+GODKÄND: Låtsas-apply genomfördes
+GODKÄND: Den sparade planen nådde låtsas-Terraform
+GODKÄND: Ingen avbrottsgren aktiverades
+GODKÄND: Inga oväntade Terraform-kommandon kördes
+
+Skriptutdata:
+  Fake Terraform apply completed for saved plan: tfplan
+
+Simulerade Terraform-anrop:
+  terraform apply tfplan
+
+SLUTRESULTAT GODKÄND VÄG: GODKÄND

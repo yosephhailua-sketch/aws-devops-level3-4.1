@@ -1,0 +1,11 @@
+DMC-032 – Tydlig diagnostik
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: 27ccc5d80f1ffd4f125d9ddf40f39d9b606d193f31343bc347924b90c769db9c
+Verifieringstyp: statisk analys och säker lokal simulering
+Riktiga AWS-, Terraform-, SSH-, Git-, curl- och deploykommandon körda: nej
+
+GODKÄND: Bash-syntaxen är giltig
+GODKÄND: Gamla YES- och echo-statusdiagnoser är borttagna
+GODKÄND: Försöksnummer och tydliga feltexter skrivs ut
+
+SLUTRESULTAT: GODKÄND

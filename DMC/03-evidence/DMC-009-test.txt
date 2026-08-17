@@ -1,0 +1,7 @@
+main script bash -n exit code: 0
+Terraform variable prerequisite sections: 1
+AWS context prerequisite sections: 1
+AWS resource prerequisite sections: 1
+terraform validate commands: 1
+terraform plan commands: 1
+validate before plan: 1

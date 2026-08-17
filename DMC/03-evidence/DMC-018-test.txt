@@ -1,0 +1,25 @@
+DMC-018 – TEST AV CITERING OCH SSH-OPTIONS-ARRAY
+Källfil: DMC/02-working/Level3 Iteration2-fixed.sh
+SHA-256: 06f61357d59c4d1a68b747b40a880fb54da3d1b631805507e743c76a75977e3b
+Riktiga SSH-, curl-, AWS- och Terraform-kommandon körda: nej
+
+GODKÄND: Bash-syntaxen är giltig
+GODKÄND: SSH_OPTIONS definieras exakt en gång som en Bash-array
+GODKÄND: Exakt två aktiva SSH-kommandon finns
+GODKÄND: Båda SSH-kommandona använder SSH_OPTIONS-arrayen
+GODKÄND: SSH-målet med MY_EC2 är citerat i båda kommandona
+GODKÄND: Inget SSH-kommando använder MY_SSH direkt
+GODKÄND: SSH_OPTIONS definieras före SSH-kommandona
+GODKÄND: Exakt ett aktivt curl-anrop använder MY_EC2
+GODKÄND: Hela curl-URL:en är korrekt citerad
+GODKÄND: SSH_OPTIONS-arrayen kan utvärderas utan fel
+GODKÄND: En nyckelsökväg med mellanslag bevaras som ett argument
+
+GRANSKADE KODRADER
+  Rad 281: MY_SSH="${MY_SSH:-$HOME/.ssh/petter-ec2-key.pem}"
+  Rad 288: SSH_OPTIONS=(-i "$MY_SSH")
+  Rad 291: ssh "${SSH_OPTIONS[@]}" "ec2-user@$MY_EC2" tail -f /var/log/cloud-init-output.log
+  Rad 297: ssh "${SSH_OPTIONS[@]}" "ec2-user@$MY_EC2"
+  Rad 331: curl "http://$MY_EC2/" 2>&1 | grep 'Hey Me!' > /dev/null && echo YES
+
+SLUTRESULTAT: GODKÄND

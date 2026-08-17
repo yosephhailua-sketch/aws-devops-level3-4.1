@@ -1,0 +1,5 @@
+main script bash -n exit code: 0
+aws_instance resources: 1
+public IP enabled settings: 1
+public IP disabled settings: 0
+subnet variable assignments: 1

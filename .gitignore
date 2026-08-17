@@ -1,0 +1,36 @@
+# Terraform local files
+.terraform/
+*.tfstate
+*.tfstate.*
+tfplan
+*.tfplan
+crash.log
+crash.*.log
+
+# Local variables
+terraform.tfvars
+*.auto.tfvars
+
+# Private keys
+*.pem
+*.key
+
+# Terraform CLI configuration
+.terraformrc
+terraform.rc
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+terraform.tfvars.*
+tfplan.*
+tfplan-*
+DMC/02-working/Level3 Iteration2-final.sh
+DMC/02-working/*.bak*
+DMC/02-working/*.before-*
+FINAL/*.before-*
+FINAL/*.original
+FINAL/*.pre-clean
+Level4/Iteration1/*pre-plan-stop*

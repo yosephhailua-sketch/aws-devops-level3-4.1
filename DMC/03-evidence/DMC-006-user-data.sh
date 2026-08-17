@@ -1,0 +1,43 @@
+#!/bin/bash
+###########################################################
+# Perform configuration management
+###########################################################
+# - detect Amazon Linux version
+if [[ ! -r /etc/os-release ]]; then
+  printf 'ERROR: /etc/os-release kunde inte lÃ¤sas.\n' >&2
+  exit 1
+fi
+
+. /etc/os-release
+
+if [[ "${ID:-}" != "amzn" ]]; then
+  printf 'ERROR: Operativsystemet stÃ¶ds inte: %s\n' "${ID:-unknown}" >&2
+  exit 1
+fi
+
+# - avoid a full system upgrade during provisioning
+# Required packages are installed in the version-specific block below.
+
+# - install Nginx and Git
+case "${VERSION_ID:-}" in
+  2023*)
+    dnf -y install nginx git
+    ;;
+  2)
+    amazon-linux-extras enable nginx1
+    yum clean metadata
+    yum -y install nginx git
+    ;;
+  *)
+    printf 'ERROR: Amazon Linux-versionen stÃ¶ds inte: %s\n' \
+      "${VERSION_ID:-unknown}" >&2
+    exit 1
+    ;;
+esac
+
+# - start nginx
+# Aktivering och statuskontroll granskas separat i DMC-007.
+service nginx start
+
+# - return to normal user mode
+# exit
