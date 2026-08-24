@@ -1,0 +1,17 @@
+DMC-035 – Blockering av destruktiv plan och automatisk återställning
+Källfil: Level4/Iteration3/Level4-Iteration3.sh
+SHA-256: 02ffd7d856bcf81ce6e9715682c0846d46001ca36690e75f17f74101060254cd
+Verifieringsdatum: 2026-08-24
+Verifieringstyp: live Terraform-plan med säkerhetsstopp och återställning
+Riktiga AWS- och Terraformkommandon körda: ja
+Riktigt Terraform apply kört: nej
+
+GODKÄND: En plan med EC2-ersättning identifierades som destruktiv
+GODKÄND: Planen innehöll 1 tillägg, 0 vanliga ändringar och 1 borttagning
+GODKÄND: Scriptet stoppade planen eftersom --allow-destroy saknades
+GODKÄND: Terraform apply startades aldrig
+GODKÄND: Projektfilerna återställdes automatiskt efter säkerhetsstoppet
+GODKÄND: Tidsstämplad recovery-backup behölls för manuell kontroll
+GODKÄND: Befintlig EC2-instans förstördes eller ersattes inte
+
+SLUTRESULTAT: GODKÄND

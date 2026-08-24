@@ -1,0 +1,17 @@
+DMC-034 – Preflight och säker resursupplösning
+Källfil: Level4/Iteration3/Level4-Iteration3.sh
+SHA-256: 02ffd7d856bcf81ce6e9715682c0846d46001ca36690e75f17f74101060254cd
+Verifieringsdatum: 2026-08-24
+Verifieringstyp: live AWS- och Terraformkontroll utan fil- eller infrastrukturändring
+Riktiga AWS- och Terraformkommandon körda: ja
+Riktiga apply-, Git push- och SSH-kommandon körda: nej
+
+GODKÄND: Aktiv AWS-identitet, konto, profil och region identifierades
+GODKÄND: Terraformprojektet och Terraformversionen verifierades
+GODKÄND: Befintligt ssh_cidr bevarades som lokal input
+GODKÄND: Befintlig AMI bevarades med explicit --ami-id
+GODKÄND: Extern säkerhetsgrupp löstes med exakt --sg-name
+GODKÄND: EC2-nyckelparet löstes från Terraform state
+GODKÄND: --check-only ändrade inga filer och ingen infrastruktur
+
+SLUTRESULTAT: GODKÄND

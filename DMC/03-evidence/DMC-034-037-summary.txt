@@ -1,0 +1,11 @@
+DMC-034–DMC-037 – SAMLAD LIVE- OCH SÄKERHETSVERIFIERING
+Källfil: Level4/Iteration3/Level4-Iteration3.sh
+SHA-256: 02ffd7d856bcf81ce6e9715682c0846d46001ca36690e75f17f74101060254cd
+Verifieringsdatum: 2026-08-24
+
+DMC-034: GODKÄND – preflight och säker resursupplösning
+DMC-035: GODKÄND – destruktiv plan blockerades och filer återställdes
+DMC-036: GODKÄND – säker plan med 0 add, 1 change och 0 destroy
+DMC-037: GODKÄND – apply, nolldrift och live HTTP-verifiering
+
+SLUTRESULTAT: GODKÄND

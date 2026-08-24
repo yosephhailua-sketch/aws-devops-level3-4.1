@@ -28,13 +28,13 @@ data "aws_ami" "amazon_linux" {
 }
 
 locals {
-  selected_ami_id = var.ami_id != null ? var.ami_id : data.aws_ami.amazon_linux.id
+  selected_ami_id = local.iteration3_ami_id != null ? local.iteration3_ami_id : data.aws_ami.amazon_linux.id
 
-  security_group_ids = var.main_sg_id == null ? [
+  security_group_ids = local.iteration3_main_sg_id == null ? [
     aws_security_group.web.id
     ] : [
     aws_security_group.web.id,
-    var.main_sg_id
+    local.iteration3_main_sg_id
   ]
 }
 
@@ -80,8 +80,8 @@ resource "aws_security_group" "web" {
 resource "aws_instance" "web" {
   ami                         = local.selected_ami_id
   instance_type               = var.ec2_type
-  subnet_id                   = var.subnet_id
-  key_name                    = var.keypair
+  subnet_id                   = local.iteration3_subnet_id
+  key_name                    = local.iteration3_keypair
   vpc_security_group_ids      = local.security_group_ids
   associate_public_ip_address = true
 
@@ -99,7 +99,7 @@ resource "aws_instance" "web" {
   }
 
   tags = {
-    Name    = var.ec2_name
+    Name    = local.iteration3_ec2_name
     Project = "AWS DevOps Level 3"
   }
 }

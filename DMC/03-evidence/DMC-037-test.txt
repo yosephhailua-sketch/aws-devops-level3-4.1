@@ -1,0 +1,17 @@
+DMC-037 – Apply, nolldrift och live webbverifiering
+Källfil: Level4/Iteration3/Level4-Iteration3.sh
+SHA-256: 02ffd7d856bcf81ce6e9715682c0846d46001ca36690e75f17f74101060254cd
+Verifieringsdatum: 2026-08-24
+Verifieringstyp: live Terraform apply, efterkontroll och HTTP-test
+Riktiga AWS-, Terraform- och curlkommandon körda: ja
+Riktiga Git commit- och pushkommandon körda: nej
+
+GODKÄND: Den granskade ändringen applicerades utan resursersättning
+GODKÄND: Terraform rapporterade därefter att infrastrukturen matchade konfigurationen
+GODKÄND: Efterkontrollen rapporterade No changes
+GODKÄND: Webbserverns publika HTTP-adress testades
+GODKÄND: Webbtestet fick ett framgångsrikt HTTP-svar
+GODKÄND: Iteration 3-arbetsflödet slutfördes framgångsrikt
+GODKÄND: Git lämnades oförändrat för separat manuell granskning
+
+SLUTRESULTAT: GODKÄND
