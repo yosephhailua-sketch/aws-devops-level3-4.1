@@ -35,3 +35,7 @@ FINAL/*.original
 FINAL/*.pre-clean
 Level4/Iteration1/*pre-plan-stop*
 .level4-iteration3-backups/
+
+# Local backups created during Level 4 Iteration 1 review
+Level4/Iteration1/Level4-Iteration1-working.sh.bak
+iteration3.tf.before-level4
