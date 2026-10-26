@@ -4,6 +4,7 @@ set -Eeuo pipefail
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 PROJECT_DIR=$(cd -- "$SCRIPT_DIR/../.." && pwd)
 cd "$PROJECT_DIR"
+TF_DIR="$SCRIPT_DIR/terraform"
 REQUIRED_COMMANDS=(aws awk curl terraform)
 
 for command_name in "${REQUIRED_COMMANDS[@]}"; do
@@ -13,11 +14,11 @@ for command_name in "${REQUIRED_COMMANDS[@]}"; do
   fi
 done
 
-REQUIRED_FILES=(main.tf variables.tf user-data.web.sh)
+REQUIRED_FILES=(main.tf variables.tf provider.tf outputs.tf user-data.web.sh)
 
 for required_file in "${REQUIRED_FILES[@]}"; do
-  if [ ! -f "$required_file" ]; then
-    echo "ERROR: Required project file is missing: $required_file" >&2
+  if [ ! -f "$TF_DIR/$required_file" ]; then
+    echo "ERROR: Required Iteration 1 Terraform file is missing: $TF_DIR/$required_file" >&2
     exit 1
   fi
 done
@@ -57,9 +58,9 @@ require_value() {
 
 # - get back all important varaibles
 MY_USER=$(aws sts get-caller-identity --query Arn --output text | awk -F/ '{print $NF}')
-MY_KEYNAME="petter-ec2-key"
-MY_SSH="$HOME/.ssh/petter-ec2-key.pem"
-MY_SG=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=devops-school-level3" --query "SecurityGroups[0].GroupId" --output text)
+MY_KEYNAME="ec2kp"
+MY_SSH="$HOME/.ssh/ec2kp"
+MY_SG=$(aws ec2 describe-security-groups --filters "Name=group-name,Values=apl-web-sg" --query "SecurityGroups[0].GroupId" --output text)
 MY_VPC=$(aws ec2 describe-security-groups --group-ids "$MY_SG" --query "SecurityGroups[0].VpcId" --output text)
 MY_SUBNET=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=${MY_VPC}" "Name=state,Values=available" --query "sort_by(Subnets,&AvailabilityZone)[0].SubnetId" --output text)
 MY_AMI=$(aws ssm get-parameter --name "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64" --query "Parameter.Value" --output text)
@@ -105,8 +106,8 @@ if [ "${VALIDATE_ONLY:-0}" = "1" ]; then
   exit 0
 fi
 
-if [ -e tfplan ]; then
-  echo "ERROR: tfplan already exists. Review, archive or remove it before creating a new plan." >&2
+if [ -e "$TF_DIR/tfplan" ]; then
+  echo "ERROR: $TF_DIR/tfplan already exists. Review or archive it before creating a new plan." >&2
   exit 1
 fi
 
@@ -117,11 +118,11 @@ if ! [[ "$MY_PUBLIC_IP" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
   exit 1
 fi
 
-if [ -f terraform.tfvars ] && [ ! -f terraform.tfvars.before-level4 ]; then
-  cp -p terraform.tfvars terraform.tfvars.before-level4
+if [ -f "$TF_DIR/terraform.tfvars" ] && [ ! -f "$TF_DIR/terraform.tfvars.before-level4" ]; then
+  cp -p "$TF_DIR/terraform.tfvars" "$TF_DIR/terraform.tfvars.before-level4"
 fi
 
-cat <<EOF > terraform.tfvars
+cat <<EOF > "$TF_DIR/terraform.tfvars"
 ami_id = "${MY_AMI}"
 subnet_id = "${MY_SUBNET}"
 main_sg_id = "${MY_SG}"
@@ -130,19 +131,17 @@ ec2_name = "devops-school-level3.${MY_USER}"
 keypair = "${MY_KEYNAME}"
 ssh_cidr = "${MY_PUBLIC_IP}/32"
 EOF
-terraform fmt terraform.tfvars >/dev/null
 
-# - do the init
-terraform init -input=false
+terraform -chdir="$TF_DIR" fmt
+terraform -chdir="$TF_DIR" init -input=false
+terraform -chdir="$TF_DIR" fmt -check
+terraform -chdir="$TF_DIR" validate
 
-terraform fmt -check
-terraform validate
-
-# - re-build using new user-data instructions
-terraform plan -input=false -out=tfplan
+# Create a reviewable plan only after the configuration has been checked.
+terraform -chdir="$TF_DIR" plan -input=false -out=tfplan
 
 # The script stops after creating the reviewable Terraform plan.
-# Review with: terraform show -no-color tfplan
-# Apply manually only after review: terraform apply "tfplan"
+# Review with: terraform -chdir="$TF_DIR" show -no-color tfplan
+# Apply manually only after review: terraform -chdir="$TF_DIR" apply "tfplan"
 # Post-apply SSH and HTTP verification must be run separately.
 # Terraform destroy is intentionally excluded.
