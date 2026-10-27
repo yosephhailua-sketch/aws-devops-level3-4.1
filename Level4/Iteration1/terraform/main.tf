@@ -1,42 +1,9 @@
-data "aws_vpc" "default" {
-  default = true
-}
-
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-x86_64"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name   = "state"
-    values = ["available"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-}
-
-locals {
-  selected_ami_id = var.ami_id != null ? var.ami_id : data.aws_ami.amazon_linux.id
-}
-
 resource "aws_instance" "web" {
-  ami                         = local.selected_ami_id
+  ami                         = local.ami_id
   instance_type               = var.ec2_type
-  subnet_id                   = var.subnet_id
-  key_name                    = var.keypair
-  vpc_security_group_ids      = [var.main_sg_id]
+  subnet_id                   = local.subnet_id
+  key_name                    = local.keypair
+  vpc_security_group_ids      = [local.main_sg_id]
   associate_public_ip_address = true
 
   user_data                   = file("${path.module}/user-data.web.sh")
@@ -53,7 +20,7 @@ resource "aws_instance" "web" {
   }
 
   tags = {
-    Name    = var.ec2_name
+    Name    = local.ec2_name
     Project = "AWS DevOps Level 3"
   }
 }

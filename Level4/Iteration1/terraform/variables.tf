@@ -1,46 +1,49 @@
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-  default     = "eu-north-1"
+data "aws_ssm_parameter" "amazon_linux_ami_id" {
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
 }
 
-variable "ami_id" {
-  description = "Optional AMI ID; the newest Amazon Linux 2023 AMI is used when null"
+data "aws_vpc" "default" {
+  default = true
+}
+
+data "aws_region" "current" {}
+
+data "aws_subnet" "default" {
+  vpc_id = data.aws_vpc.default.id
+
+  filter {
+    name   = "availability-zone"
+    values = [format("%sa", data.aws_region.current.region)]
+  }
+}
+
+data "aws_security_groups" "main" {
+  filter {
+    name   = "group-name"
+    values = ["apl-web-sg"]
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
+locals {
+  ec2_name   = format("devops-school-level3.%s", var.aws_owner)
+  ami_id     = nonsensitive(data.aws_ssm_parameter.amazon_linux_ami_id.value)
+  subnet_id  = data.aws_subnet.default.id
+  keypair    = "ec2kp"
+  main_sg_id = data.aws_security_groups.main.ids[0]
+}
+
+variable "aws_owner" {
   type        = string
-  default     = null
+  description = "The individual that is taking care of this infrastructure"
 }
 
 variable "ec2_type" {
-  description = "EC2 instance type"
   type        = string
   default     = "t3.micro"
-}
-
-variable "subnet_id" {
-  description = "Optional subnet ID; AWS selects a default subnet when null"
-  type        = string
-  default     = null
-}
-
-variable "keypair" {
-  description = "Existing AWS EC2 key pair"
-  type        = string
-  default     = "petter-ec2-key"
-}
-
-variable "main_sg_id" {
-  description = "Optional additional security group ID"
-  type        = string
-  default     = null
-}
-
-variable "ec2_name" {
-  description = "Name of the EC2 instance"
-  type        = string
-  default     = "aws-devops-level3-web"
-}
-
-variable "ssh_cidr" {
-  description = "Public IP address allowed to use SSH"
-  type        = string
+  description = "EC2 instance type to construct"
 }
